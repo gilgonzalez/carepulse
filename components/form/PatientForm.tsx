@@ -8,21 +8,11 @@ import { z } from "zod"
 import {
   Form,
 } from "@/components/ui/form"
-import { CustomFormField, SubmitButton } from '.'
+import { CustomFormField, FormFieldType, SubmitButton } from '.'
 import { UserFormValidation } from '@/lib/validation'
 import { useRouter } from 'next/navigation'
 import { createUser } from '@/lib/actions/patient'
 
-
-export enum FormFieldType {
-  INPUT = 'input',
-  CHECKBOX = 'checkbox',
-  TEXTAREA = 'textarea',
-  PHONE = 'phone',
-  DATE_PICKER = 'datePicker',
-  SELECT = 'select',
-  SKELETON = 'skeleton',
-}
 
 export const PatientForm = () => {
 
@@ -40,7 +30,6 @@ export const PatientForm = () => {
   })
 
   async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
-    console.log('clicked')
     setIsLoading(true)
     try{
       const userData = {

@@ -20,10 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn('min-h-screen bg-dark-300 antialiased', inter.className)}>
       <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            
-          >
+        attribute="class"
+        defaultTheme="dark"
+      >
         {children}
         </ThemeProvider>
       </body>

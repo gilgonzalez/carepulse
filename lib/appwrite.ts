@@ -1,18 +1,3 @@
-// import { Client } from 'appwrite';
-
-// const client = new Client();
-
-// console.log(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-// console.log(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
-
-
-// client
-//     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-//     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!)
-
-
-//     export default client;
-
 import * as sdk from 'node-appwrite'
 
 export const {
@@ -25,15 +10,13 @@ export const {
     APPOINTMENT_COLLECTION_ID,
     NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
 } = process.env
-console.log(ENDPOINT)
 
 const client = new sdk.Client()
 
 client
-    .setEndpoint(ENDPOINT!)
-    .setProject(PROJECT_ID!)
-    .setKey(API_KEY!)
-console.log({client})
+    .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_PROJECT_ID!)
+    .setKey(process.env.NEXT_PUBLIC_API_KEY!)
 
 export const databases = new sdk.Databases(client)
 export const storage = new sdk.Storage(client)
