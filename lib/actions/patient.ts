@@ -16,8 +16,6 @@ export const createUser = async (user: CreateUserParams) => {
       undefined,
       user.name
     )
-    console.log({newUser})
-    //66aedef200098e335e45 userId de auth
     return parseStringify(newUser)
     
   } catch (error : any) {
@@ -40,38 +38,9 @@ export const getUser = async (userId:string) => {
     console.log(error)
   }
 }
-export const getPatient = async (userId:string) => {
-
-  try {
-    const patients = await databases.listDocuments(
-      DATABASE_ID!, 
-      PATIENT_COLLECTION_ID!, 
-      [Query.equal('userId', userId)]
-    );
-    console.log(patients)
-    return parseStringify(patients.documents[0])
-  } catch (error) {
-    console.log(error)
-  }
-}
-export const getPatientByEmail = async (email:string) => {
-
-  try {
-    const patients = await databases.listDocuments(
-      DATABASE_ID!, 
-      PATIENT_COLLECTION_ID!, 
-      [Query.equal('email', email)]
-    );
-    console.log(patients)
-    return parseStringify(patients.documents[0])
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 export const registerPatient = async ({identificationDocument, ...patient} : RegisterUserParams) => {
-
-  //patient id 66aedfa0001a32b98f3b
+  
   try {
     let file;
     if (identificationDocument){
@@ -96,5 +65,40 @@ export const registerPatient = async ({identificationDocument, ...patient} : Reg
   } catch (error) {
     console.log(error)
   }
-
+  
 }
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return parseStringify(patients.documents[0]);
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the patient details:",
+      error
+    );
+  }
+};
+export const getPatientByEmail = async (email: string) => {
+  console.log(email)
+  try {
+    const patients = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("email", email)]
+    );
+    console.log(patients)
+
+    return parseStringify(patients.documents[0]);
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the patient details:",
+      error
+    );
+  }
+};

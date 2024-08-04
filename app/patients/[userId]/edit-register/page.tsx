@@ -1,7 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import { RegisterForm } from '@/components/form/RegisterForm'
-import { getPatient,  } from '@/lib/actions/patient'
+import { getPatient, getPatientByEmail, getUser } from '@/lib/actions/patient'
+import { redirect } from 'next/navigation'
+
 
 interface PatientRegisterPageProps {
   params : {
@@ -10,9 +12,9 @@ interface PatientRegisterPageProps {
 }
 
 const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps) => {
-
+  
   const patient = await getPatient(userId)
-
+  
   return (
     <main className="flex bg-cover bg-register bg-fit bg-repeat-y">
       {/** TODO : OTP NOTIFICATION */}

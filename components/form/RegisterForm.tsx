@@ -57,7 +57,7 @@ export const RegisterForm = ({user}:{user : User}) => {
       const newPatient = await registerPatient(patientData)
 
       if(newPatient){
-        router.push(`/patients/${newPatient.$id}/new-appointment`)
+        router.push(`/patients/${newPatient.userId}/new-appointment`)
       }
       
     } catch (error) {
