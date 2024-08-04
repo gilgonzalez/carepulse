@@ -54,6 +54,7 @@ const config = {
         pending: "url('/assets/images/pending-bg.png')",
         cancelled: "url('/assets/images/cancelled-bg.png')",
         register: "url('/assets/images/register-img.png')",
+        appointment: "url('/assets/images/appointment-img.png')",
       },
       keyframes: {
         "accordion-down": {

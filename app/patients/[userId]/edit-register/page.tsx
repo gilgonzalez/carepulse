@@ -1,8 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { RegisterForm } from '@/components/form/RegisterForm'
-import { getPatientByEmail, getUser } from '@/lib/actions/patient'
-import { redirect } from 'next/navigation'
+import { getPatient,  } from '@/lib/actions/patient'
 
 interface PatientRegisterPageProps {
   params : {
@@ -11,16 +10,9 @@ interface PatientRegisterPageProps {
 }
 
 const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps) => {
-  
-  const user = await getUser(userId)
-  console.log(user)
-  const patient = await getPatientByEmail(user.email)
-  console.log(patient)
 
-  if(patient){
-    redirect(`/patients/${patient.userId}/new-appointment`)
-  }
-  
+  const patient = await getPatient(userId)
+
   return (
     <main className="flex bg-cover bg-register bg-fit bg-repeat-y">
       {/** TODO : OTP NOTIFICATION */}
@@ -33,7 +25,7 @@ const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps
             alt="logo empresa"
             className="mb-12 h-10 w-fit"
           />
-          <RegisterForm user={user}/>
+          <RegisterForm user={patient}/>
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2024 Name company. All rights reserved.
