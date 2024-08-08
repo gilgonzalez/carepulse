@@ -62,7 +62,7 @@ const AppointmentCard = ({appoinment }: AppointmentProps) => {
             <p className='text-14-regular'>{appoinment.note}</p>
           </span>
         </div>
-        {
+        {/* {
           appoinment.injuryImageUrl && (
             <Image 
               src={'/storage/buckets/bucket-id/files/' + appoinment.injuryImageId + '/view?project=project-id'}
@@ -72,7 +72,7 @@ const AppointmentCard = ({appoinment }: AppointmentProps) => {
               className="mt-4 rounded-lg border border-dark-500"
             />
           )
-        }
+        } */}
       </CardContent>  
       <CardFooter className='flex justify-end px-10 gap-10'>
         <div className='w-fit bg-red-800 rounded-full border border-dark-500 text-center'>

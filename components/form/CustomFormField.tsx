@@ -45,7 +45,7 @@ export const CustomFormField = (props: CustomProps) => {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={`flex-1 ${props.containerClassName}`}>
+        <FormItem className={`flex-1 flex justify-between flex-col ${props.containerClassName}`}>
           {props.fieldType !== FormFieldType.CHECKBOX && label && (
             <FormLabel className="shad-input-label">{label}</FormLabel>
           )}

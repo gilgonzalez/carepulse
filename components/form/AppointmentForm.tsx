@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CustomFormField, FormFieldType, SubmitButton } from '.'
 import { Form, FormControl } from '../ui/form'
 import { useForm } from 'react-hook-form'
@@ -27,7 +27,6 @@ interface AppointmentFormProps {
 const AppointmentForm = ({userId, patientId, type, appointment, setOpen, editable}: AppointmentFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  console.log({userId})
 
   const AppointmentFormValidation = getAppointmentSchema(type)
 
@@ -101,44 +100,49 @@ const AppointmentForm = ({userId, patientId, type, appointment, setOpen, editabl
   }
   return (
     <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex-1">
-      {
-        type === 'create' && (
-          <section className='mb-12 space-y-4'>
-        <h1 className='header'>{'🚨 Solicitar una cita' }</h1>
-        <p className='text-dark-700'>{type === "create" ? 'Solicita tu cita en menos de 1 minuto !' : 'Cancela tu cita sin problemas'}</p>
-      </section>
-        )
-      }
-      {
-        type !== "cancel" ? (
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex-1">
+        {type === "create" && (
+          <section className="mb-12 space-y-4">
+            <h1 className="header">{"🚨 Solicitar una cita"}</h1>
+            <p className="text-dark-700">
+              {type === "create"
+                ? "Solicita tu cita en menos de 1 minuto !"
+                : "Cancela tu cita sin problemas"}
+            </p>
+          </section>
+        )}
+        {type !== "cancel" ? (
           <>
             <CustomFormField
-                control={form.control}
-                fieldType={FormFieldType.SELECT}
-                name="primaryPhysician"
-                label="Médico Primario"
-                placeholder='Ej: Dr. Juan Perez'
-              >
-                {
-                  Doctors.map((doctor)=>(
-                    <SelectItem key={doctor.name} value={doctor.name}>
-                      <div className='flex cursor-pointer items-center gap-2'>
-                        <Image src={doctor.image} width={32} height={32} alt={doctor.name} className='rounded-full border border-dark-500'/>
-                        <p>{doctor.name}</p>
-                      </div>
-                    </SelectItem>
-                  ))
-                }
-              </CustomFormField>
-              <div className='flex flex-col gap-6 lg:flex-row '>
-            <CustomFormField
+              control={form.control}
+              fieldType={FormFieldType.SELECT}
+              name="primaryPhysician"
+              label="Médico Primario"
+              placeholder="Ej: Dr. Juan Perez"
+            >
+              {Doctors.map((doctor) => (
+                <SelectItem key={doctor.name} value={doctor.name}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <Image
+                      src={doctor.image}
+                      width={32}
+                      height={32}
+                      alt={doctor.name}
+                      className="rounded-full border border-dark-500"
+                    />
+                    <p>{doctor.name}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <div className="flex flex-col gap-6 md:flex-row ">
+              <CustomFormField
                 control={form.control}
                 fieldType={FormFieldType.TEXTAREA}
                 name="reason"
                 label="Razón de la consulta"
-                placeholder='Ej: Dolor muscular, rotura de fibras, etc.'
-                disabled={!editable} 
+                placeholder="Ej: Dolor muscular, rotura de fibras, etc."
+                disabled={!editable}
               />
               <CustomFormField
                 control={form.control}
@@ -150,52 +154,57 @@ const AppointmentForm = ({userId, patientId, type, appointment, setOpen, editabl
               />
             </div>
             <CustomFormField
-                  control={form.control}
-                  fieldType={FormFieldType.DATE_PICKER}
-                  name="schedule"
-                  placeholder='Selecciona la fecha en la que quieres consultar'
-                  label="Solicitar fecha de la consulta"
-                  showTimeSelect
-                  dateFormat="MM/dd/yyyy  -  h:mm aa"
-              />
-              <CustomFormField
-          control={form.control}
-          fieldType={FormFieldType.SKELETON}
-          name="injuryImageUrl"
-          label="Image de la lesión"
-          placeholder="(+34) 987654321"
-          renderSkeleton={(field)=> (
-            <FormControl className='flex-1'>
-              <FileUploader 
-                files={field.value}
-                onChange={field.onChange}
-              />
-            </FormControl>
-          )}
-        />
-            </>
+              control={form.control}
+              fieldType={FormFieldType.DATE_PICKER}
+              name="schedule"
+              placeholder="Selecciona la fecha en la que quieres consultar"
+              label="Solicitar fecha de la consulta"
+              showTimeSelect
+              dateFormat="MM/dd/yyyy  -  h:mm aa"
+            />
+            {/* <CustomFormField
+              control={form.control}
+              fieldType={FormFieldType.SKELETON}
+              name="injuryImageUrl"
+              label="Image de la lesión"
+              placeholder="(+34) 987654321"
+              renderSkeleton={(field) => (
+                <FormControl className="flex-1">
+                  <FileUploader files={field.value} onChange={field.onChange} />
+                </FormControl>
+              )}
+            /> */}
+          </>
         ) : (
           <CustomFormField
-                control={form.control}
-                fieldType={FormFieldType.TEXTAREA}
-                name="cancellationReason"
-                label="Razón de la cancelación"
-                placeholder='Ej: Recuperación 🥳'
+            control={form.control}
+            fieldType={FormFieldType.TEXTAREA}
+            name="cancellationReason"
+            label="Razón de la cancelación"
+            placeholder="Ej: Recuperación 🥳"
           />
-        )
-      }
-      
-      <SubmitButton 
-        isLoading={form.formState.isSubmitting || isLoading}
-        className={cn('w-full', 
-                      type === "create" && 'shad-primary-btn', 
-                      type === "cancel" && 'shad-danger-btn',
-                      type === "schedule" && 'shad-primary-btn'
-      )}
-      > {type === "create" ? "Solicitar" : type === "schedule" ? "Confirmar" : "Cancelar"} consulta</SubmitButton>
-    </form>
-  </Form>
-  )
+        )}
+
+        <SubmitButton
+          isLoading={form.formState.isSubmitting || isLoading}
+          className={cn(
+            "w-full",
+            type === "create" && "shad-primary-btn",
+            type === "cancel" && "shad-danger-btn",
+            type === "schedule" && "shad-primary-btn"
+          )}
+        >
+          {" "}
+          {type === "create"
+            ? "Solicitar"
+            : type === "schedule"
+              ? "Confirmar"
+              : "Cancelar"}{" "}
+          consulta
+        </SubmitButton>
+      </form>
+    </Form>
+  );
 }
 
 export default AppointmentForm

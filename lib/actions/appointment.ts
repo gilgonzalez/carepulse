@@ -1,31 +1,17 @@
 'use server'
 import { ID, Query } from "node-appwrite"
-import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT, messaging, PROJECT_ID, storage } from "../appwrite"
+import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT, messaging, PROJECT_ID, storage } from "../appwrite"
 import { parseStringify } from "../utils"
-import { InputFile } from "node-appwrite/file"
 import { Appointment } from "@/types/appwrite.types"
 import { revalidatePath } from "next/cache"
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
   try {
-
-    let file;
-    if (appointment.injuryImageUrl){
-      const inputFile = InputFile.fromBuffer(
-        appointment.injuryImageUrl?.get('blobFile') as Blob,
-        appointment.injuryImageUrl?.get('fileName') as string
-      )
-      file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile)
-    }
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
       APPOINTMENT_COLLECTION_ID!,
       ID.unique(),
-      {
-        ...appointment,
-        injuryImageId: file?.$id || null,
-        injuryImageUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
-      }
+      appointment
     )
     return parseStringify(newAppointment)
     
@@ -42,13 +28,13 @@ export const getAppointment = async (appointmentId : string) => {
       APPOINTMENT_COLLECTION_ID!, 
       appointmentId
     );
+    
     return parseStringify(appointment)
   } catch (error) {
     console.log(error)
   }
 }
 export const getAppointments = async (userId: string) => {
-  
   try {
     const appointments = await databases.listDocuments(
       DATABASE_ID!, 
@@ -89,7 +75,6 @@ export const getRecentAppointments = async () => {
       ...counts,
       documents: appointments.documents
     }
-    
     return parseStringify(data)
     
   } catch (error) {
@@ -110,7 +95,6 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
       throw new Error("Appointment not found")
     }
 
-    // TODO: SMS NOTIFICATION
     const formattedDate = new Intl.DateTimeFormat('es-ES', {
       weekday: 'long',
       year: 'numeric',
