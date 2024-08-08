@@ -27,6 +27,7 @@ interface AppointmentFormProps {
 const AppointmentForm = ({userId, patientId, type, appointment, setOpen, editable}: AppointmentFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  console.log({userId})
 
   const AppointmentFormValidation = getAppointmentSchema(type)
 

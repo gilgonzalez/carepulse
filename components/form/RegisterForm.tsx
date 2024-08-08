@@ -133,7 +133,7 @@ export const RegisterForm = ({user}:{user : User}) => {
             control={form.control}
             fieldType={FormFieldType.PHONE}
             name="emergencyContactNumber"
-            label="Phone Number"
+            label="Contact Phone Number"
             placeholder="(+34) 987654321"
         />
       </div>
@@ -143,6 +143,7 @@ export const RegisterForm = ({user}:{user : User}) => {
             fieldType={FormFieldType.DATE_PICKER}
             name="birthDate"
             label="Fecha Nacimiento"
+            dateFormat="dd/MM/yyyy"
         />
         <CustomFormField
           control={form.control}

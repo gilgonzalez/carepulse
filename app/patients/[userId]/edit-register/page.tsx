@@ -16,7 +16,6 @@ const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps
   
   return (
     <main className="flex bg-cover bg-register bg-fit bg-repeat-y">
-      {/** TODO : OTP NOTIFICATION */}
       <section className="remove-scrollbar container my-auto">
         <div className="my-8">
           <Image 

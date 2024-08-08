@@ -31,7 +31,6 @@ const AdminPage = async() => {
           <p className='text-dark-700'>Gestiona todas tus citas</p>
         </section>
         <section className='admin-stat'>
-          {/* TODO : STAT CARD */}
           <StatCard
             type="appointments"
             count={appointments.scheduledCount}

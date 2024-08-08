@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { RegisterForm } from '@/components/form/RegisterForm'
 import { getPatientByEmail, getUser } from '@/lib/actions/patient'
 import { redirect } from 'next/navigation'
+import * as Sentry from "@sentry/nextjs";
 
 
 interface PatientRegisterPageProps {
@@ -14,15 +15,16 @@ interface PatientRegisterPageProps {
 const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps) => {
   
   const user = await getUser(userId)
+  Sentry.metrics.set("user_view_register", user.name);
 
   const patient = await getPatientByEmail(user.email!)  
   if(patient){
-    redirect(`/patients/${patient.userId}/new-appointment`)
+    redirect(`/patients/${userId}/new-appointment`)
   }
+
   
   return (
     <main className="flex bg-cover bg-register bg-fit bg-repeat-y">
-      {/** TODO : OTP NOTIFICATION */}
       <section className="remove-scrollbar container my-auto">
         <div className="my-8">
           <Image 

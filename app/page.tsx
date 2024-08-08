@@ -11,7 +11,6 @@ export default function Home({searchParams} : SearchParamProps) {
   
   return (
     <main className="flex h-screen max-h-screen">
-      {/** TODO : OTP NOTIFICATION */}
       {
         isAdmin && (
           <PasskeyModal/>

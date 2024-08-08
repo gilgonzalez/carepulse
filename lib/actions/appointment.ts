@@ -1,6 +1,6 @@
 'use server'
 import { ID, Query } from "node-appwrite"
-import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT, PROJECT_ID, storage } from "../appwrite"
+import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT, messaging, PROJECT_ID, storage } from "../appwrite"
 import { parseStringify } from "../utils"
 import { InputFile } from "node-appwrite/file"
 import { Appointment } from "@/types/appwrite.types"
@@ -111,11 +111,43 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
     }
 
     // TODO: SMS NOTIFICATION
-
+    const formattedDate = new Intl.DateTimeFormat('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(updatedAppointment.schedule))
+    const smsMessage = `
+      Buenos días ${updatedAppointment.patient.name}!
+      ${type === "schedule" ? 
+        `Te escribimos desde NameCompany. Tu consulta con ${updatedAppointment.primaryPhysician} ha sido confirmada para la siguiente fecha: ${formattedDate}. Un cordial saludo!` 
+        : type === 'cancel' 
+        ? `Tu cita ha sido cancelada por el siguiente motivo: ${updatedAppointment.cancellationReason}`
+        : ''}
+    `
+    await sendSMSNotification(userId, smsMessage)
 
     revalidatePath('/admin')
     return parseStringify(updatedAppointment)
 
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const sendSMSNotification = async (userId:string, content: string) =>{
+  console.log({userId, content})
+  try {
+    const message = await messaging.createSms(
+      ID.unique(),
+      content,
+      [],
+      [userId]
+    )
+
+    return parseStringify(message)
   } catch (error) {
     console.log(error)
   }
