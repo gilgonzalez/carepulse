@@ -6,25 +6,15 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Montserrat_Alternates({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
-
-export const metadata :Metadata = {
-  title: 'Alg-Consultas',
-  description: 'App desarrollada desde Algámitas-Andalucía para gestionar tus citas',
+export const metadata: Metadata = {
+  title: "Alg-Consultas",
+  description:'App desarrollada desde Algámitas-Andalucía para gestionar tus citas',
   openGraph: {
-   title: 'Alg-Consultas',
-   description: 'App desarrollada desde Algámitas-Andalucía para gestionar tus citas',
-   url: 'https://www.example.com',
-   images: [
-    {
-     url: 'assets/images/onboarding-img.png',
-     width: 1200,
-     height: 630,
-     alt: 'Alg-Consultas',
-    },
-   ],
-   siteName: 'Alg-Consultas',
+    title: "Alg-Consultas",
+    description:'App desarrollada desde Algámitas-Andalucía para gestionar tus citas',
+    images: ["/assets/images/onboarding-img.png"],
   },
- };
+};
 
 export default function RootLayout({
   children,
