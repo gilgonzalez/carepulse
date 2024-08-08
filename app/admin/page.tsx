@@ -2,8 +2,11 @@ import Link from 'next/link'
 import React from 'react'
 import Image from 'next/image'
 import Stats from './components/Stats'
+import { getRecentAppointments } from '@/lib/actions/appointment'
 
 const AdminPage = async() => {
+
+  const appointments = await getRecentAppointments()
 
   return (
     <div className = "mx-auto flex space-y-14 max-w-7xl flex-col">
@@ -26,7 +29,7 @@ const AdminPage = async() => {
           <h1 className='header'>👋 Hola Admin!</h1>
           <p className='text-dark-700'>Gestiona todas tus citas</p>
         </section>
-        <Stats/>
+        <Stats appointments={appointments}/>
       </main>
       
 

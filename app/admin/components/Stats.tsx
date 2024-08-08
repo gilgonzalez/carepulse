@@ -5,9 +5,9 @@ import StatCard from './StatCard'
 import { getRecentAppointments } from '@/lib/actions/appointment'
 import { DataTable } from './table/DataTable'
 import { columns } from './table/columns'
+import { Appointment } from '@/types/appwrite.types'
 
-const Stats = async() => {
-  const appointments = await getRecentAppointments()
+const Stats = async({appointments} : {appointments: any}) => {
   return (
     <>
     <section className='admin-stat'>
