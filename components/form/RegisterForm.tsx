@@ -12,7 +12,7 @@ import {
 import { CustomFormField, FormFieldType, SubmitButton } from '.'
 import { PatientFormValidation } from '@/lib/validation'
 import { useRouter } from 'next/navigation'
-import { createUser, registerPatient } from '@/lib/actions/patient'
+import { registerPatient } from '@/lib/actions/patient'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Doctors, GenderOptions, IdentificationTypes } from '@/constants'
 import { Label } from '../ui/label'

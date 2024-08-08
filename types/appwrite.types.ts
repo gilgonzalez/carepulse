@@ -30,6 +30,7 @@ export interface Appointment extends Models.Document {
   status: Status;
   primaryPhysician: string;
   reason: string;
+  injuyImageUrl: string | null;
   note: string;
   userId: string;
   cancellationReason: string | null;

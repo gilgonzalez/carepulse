@@ -79,6 +79,7 @@ export const PatientFormValidation = z.object({
 export const CreateAppointmentSchema = z.object({
   primaryPhysician: z.string().min(2, " Seleccione al menos un profesional"),
   schedule: z.coerce.date(),
+  injuryImageUrl: z.custom<File[]>().optional(),
   reason: z
     .string()
     .min(2, "La razón de la consulta debe tener al menos 2 letras")
@@ -92,6 +93,7 @@ export const ScheduleAppointmentSchema = z.object({
   schedule: z.coerce.date(),
   reason: z.string().optional(),
   note: z.string().optional(),
+  injuryImageUrl: z.custom<File[]>().optional(),
   cancellationReason: z.string().optional(),
 });
 
@@ -99,6 +101,7 @@ export const CancelAppointmentSchema = z.object({
   primaryPhysician: z.string().min(2, "Seleccione al menos un profesional"),
   schedule: z.coerce.date(),
   reason: z.string().optional(),
+  injuryImageUrl: z.custom<File[]>().optional(),
   note: z.string().optional(),
   cancellationReason: z
     .string()

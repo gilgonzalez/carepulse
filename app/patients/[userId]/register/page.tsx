@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { RegisterForm } from '@/components/form/RegisterForm'
-import { getPatient, getPatientByEmail, getUser } from '@/lib/actions/patient'
+import { getPatientByEmail, getUser } from '@/lib/actions/patient'
 import { redirect } from 'next/navigation'
 
 
@@ -15,7 +15,7 @@ const RegistrationPage = async ( {params :{ userId }} : PatientRegisterPageProps
   
   const user = await getUser(userId)
 
-  const patient = await getPatientByEmail(user.email)
+  const patient = await getPatientByEmail(user.email!)  
   if(patient){
     redirect(`/patients/${patient.userId}/new-appointment`)
   }

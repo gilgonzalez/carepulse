@@ -3,12 +3,12 @@ import { ID, Query } from "node-appwrite"
 import { BUCKET_ID, DATABASE_ID, databases, ENDPOINT, PATIENT_COLLECTION_ID, PROJECT_ID, storage, users } from "../appwrite"
 import { parseStringify } from "../utils"
 import { InputFile } from "node-appwrite/file"
+import { revalidatePath } from "next/cache"
 
 
 export const createUser = async (user: CreateUserParams) => {
 
   try {
-    console.log('lo intenta')
     const newUser = await users.create(
       ID.unique(),
       user.email,
@@ -24,6 +24,7 @@ export const createUser = async (user: CreateUserParams) => {
       const documents = await users.list([
         Query.equal('email', [user.email])
       ])
+      console.log({documents})
       return documents.users[0]
     }
   }
@@ -69,6 +70,7 @@ export const registerPatient = async ({identificationDocument, ...patient} : Reg
 }
 
 export const getPatient = async (userId: string) => {
+  revalidatePath(`/patients/${userId}`)
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
@@ -84,21 +86,20 @@ export const getPatient = async (userId: string) => {
     );
   }
 };
-export const getPatientByEmail = async (email: string) => {
-  console.log(email)
+
+export const getPatientByEmail = async (email: string) => { 
+  console.log({email})
+  revalidatePath('/patients')
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
-      [Query.equal("email", email)]
+      [Query.equal("email", [email])]
     );
     console.log(patients)
 
     return parseStringify(patients.documents[0]);
-  } catch (error) {
-    console.error(
-      "An error occurred while retrieving the patient details:",
-      error
-    );
+  } catch (error : any) { 
+    console.log({error})
   }
-};
+}

@@ -45,6 +45,7 @@ declare type SearchParamProps = {
     reason: string;
     schedule: Date;
     status: Status;
+    injuryImageUrl: FormData | null;
     note: string | undefined;
   };
   

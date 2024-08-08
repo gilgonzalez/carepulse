@@ -1,8 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { RegisterForm } from '@/components/form/RegisterForm'
-import { getPatient, getPatientByEmail, getUser } from '@/lib/actions/patient'
-import { redirect } from 'next/navigation'
+import { getPatient } from '@/lib/actions/patient'
 
 
 interface PatientRegisterPageProps {

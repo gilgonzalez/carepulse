@@ -27,12 +27,20 @@ const NewAppointmentPage = async({ params: {userId} } : PatientRegisterPageProps
               alt="logo empresa"
               className="mb-12 h-10 w-fit"
             />
-          <Link
-            className=' text-emerald-500 font-bold hover:cursor-pointer'
-            href={`/patients/${userId}/edit-register`}
-          >
-            Modificar datos de registro
-          </Link>
+            <div className='flex flex-col gap-4'>
+              <Link
+                className=' text-emerald-500 font-bold hover:cursor-pointer'
+                href={`/patients/${userId}/edit-register`}
+              >
+                Modificar datos de registro
+              </Link>
+              <Link
+                className=' text-emerald-500 font-bold hover:cursor-pointer'
+                href={`/patients/${userId}/appointments`}
+              >
+                Ver todas mis citas
+              </Link>
+            </div>
           </div>
           <AppointmentForm
             type="create"
