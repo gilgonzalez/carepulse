@@ -48,7 +48,7 @@ export const getAppointment = async (appointmentId : string) => {
   }
 }
 export const getAppointments = async (userId: string) => {
-  revalidatePath(`/patients/${userId}/appointments`)
+  
   try {
     const appointments = await databases.listDocuments(
       DATABASE_ID!, 
@@ -89,7 +89,7 @@ export const getRecentAppointments = async () => {
       ...counts,
       documents: appointments.documents
     }
-    revalidatePath('/admin')
+    
     return parseStringify(data)
     
   } catch (error) {

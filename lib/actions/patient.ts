@@ -3,7 +3,6 @@ import { ID, Query } from "node-appwrite"
 import { BUCKET_ID, DATABASE_ID, databases, ENDPOINT, PATIENT_COLLECTION_ID, PROJECT_ID, storage, users } from "../appwrite"
 import { parseStringify } from "../utils"
 import { InputFile } from "node-appwrite/file"
-import { revalidatePath } from "next/cache"
 
 
 export const createUser = async (user: CreateUserParams) => {
@@ -70,7 +69,6 @@ export const registerPatient = async ({identificationDocument, ...patient} : Reg
 }
 
 export const getPatient = async (userId: string) => {
-  revalidatePath(`/patients/${userId}`)
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
@@ -88,8 +86,6 @@ export const getPatient = async (userId: string) => {
 };
 
 export const getPatientByEmail = async (email: string) => { 
-  console.log({email})
-  revalidatePath('/patients')
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,

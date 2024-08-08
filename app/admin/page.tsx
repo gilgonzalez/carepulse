@@ -9,6 +9,7 @@ import { columns } from './components/table/columns'
 const AdminPage = async() => {
 
   const appointments = await getRecentAppointments()
+  console.log({appointments})
   return (
     <div className = "mx-auto flex space-y-14 max-w-7xl flex-col">
       <header className='admin-header'>
