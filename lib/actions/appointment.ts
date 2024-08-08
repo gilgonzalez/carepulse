@@ -46,10 +46,20 @@ export const getAppointments = async (userId: string) => {
     console.log(error)
   }
 }
+export const getAllAppointments = async () => {
+  try {
+    const appointments = await databases.listDocuments(
+      DATABASE_ID!, 
+      APPOINTMENT_COLLECTION_ID!
+    );
+    return parseStringify(appointments.documents)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const getRecentAppointments = async () => {
   try {
-
     const appointments = await databases.listDocuments(
       DATABASE_ID!, 
       APPOINTMENT_COLLECTION_ID!, 

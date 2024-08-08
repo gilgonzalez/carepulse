@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
 import Image from 'next/image'
-import Stats from './components/Stats'
+import StatCard from './components/StatCard'
 import { getRecentAppointments } from '@/lib/actions/appointment'
+import {DataTable} from './components/table/DataTable'
+import { columns } from './components/table/columns'
 
 const AdminPage = async() => {
 
   const appointments = await getRecentAppointments()
-
+  
   return (
     <div className = "mx-auto flex space-y-14 max-w-7xl flex-col">
       <header className='admin-header'>
@@ -29,7 +31,30 @@ const AdminPage = async() => {
           <h1 className='header'>👋 Hola Admin!</h1>
           <p className='text-dark-700'>Gestiona todas tus citas</p>
         </section>
-        <Stats appointments={appointments}/>
+        <section className='admin-stat'>
+          <StatCard
+            type="appointments"
+            count={appointments.scheduledCount}
+            label="Citas concertadas"
+            icon="/assets/icons/appointments.svg"
+          />
+          <StatCard
+            type="pending"
+            count={appointments.pendingCount}
+            label="Citas pendientes"
+            icon="/assets/icons/pending.svg"
+          />
+          <StatCard 
+            type="cancelled"
+            count={appointments.cancelledCount}
+            label="Citas canceladas"
+            icon="/assets/icons/cancelled.svg"
+          />
+        </section>
+        <DataTable
+          data={appointments.documents}
+          columns={columns}
+        />
       </main>
       
 
