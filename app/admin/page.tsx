@@ -51,7 +51,6 @@ const AdminPage = async() => {
           />
         </section>
         <DataTable
-          
           data={appointments.documents}
           columns={columns}
         />
